@@ -14,6 +14,9 @@ proc convert*(str: string, kt: KanaType): string =
   of ktKatakana:
     for runeStr in strList:
       result.add runeStr.toKatakana
+  of ktHalfKana:
+    for runeStr in strList:
+      result.add runeStr.toHalfKana
 
 when isMainModule:
   import
@@ -33,6 +36,8 @@ when isMainModule:
         kanaType = ktHiragana
       of "k", "kata", "katakana":
         kanaType = ktKatakana
+      of "halk", "han", "hankaku":
+        kanaType = ktHalfKana
     of cmdEnd:
       discard
 

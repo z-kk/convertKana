@@ -2,10 +2,13 @@ import unittest
 
 import convertKana
 
-let teststr = "abcあいうアイウ"
+let teststr = "japaneseじゃぱにーずジャパニーズｼﾞｬﾊﾟﾆｰｽﾞ"
 
 test "convert to hiragana":
-  check teststr.convert(ktHiragana) == "abcあいうあいう"
+  check teststr.convert(ktHiragana) == "japaneseじゃぱにーずじゃぱにーずじゃぱにーず"
 
 test "convert to katakana":
-  check teststr.convert(ktKatakana) == "abcアイウアイウ"
+  check teststr.convert(ktKatakana) == "japaneseジャパニーズジャパニーズジャパニーズ"
+
+test "convert to halfkana":
+  check teststr.convert(ktHalfKana) == "japaneseｼﾞｬﾊﾟﾆｰｽﾞｼﾞｬﾊﾟﾆｰｽﾞｼﾞｬﾊﾟﾆｰｽﾞ"
