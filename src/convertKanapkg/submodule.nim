@@ -209,12 +209,13 @@ proc toHiragana*(str: string): string =
     if str.len != 3:
       return
     let cp = str[1].ord shl 8 + str[2].ord
-    if cp in {0x82a1 .. 0x82bf, 0x83a0 .. 0x83b6}:
+    case cp
+    of 0x82a1 .. 0x82bf, 0x83a0 .. 0x83b6:
       # ァ～タ, ム～ヶ
       result.add str[0]
       result.add (str[1].ord - 0x01).chr
       result.add (str[2].ord - 0x20).chr
-    elif cp in 0x8380 .. 0x839f:
+    of 0x8380 .. 0x839f:
       # ダ～ミ
       result.add str[0]
       result.add (str[1].ord - 0x02).chr
@@ -237,12 +238,13 @@ proc toKatakana*(str: string): string =
     if str.len != 3:
       return
     let cp = str[1].ord shl 8 + str[2].ord
-    if cp in {0x8181 .. 0x819f, 0x8280 .. 0x8296}:
+    case cp
+    of 0x8181 .. 0x819f, 0x8280 .. 0x8296:
       # ぁ～た, む～ゖ
       result.add str[0]
       result.add (str[1].ord + 0x01).chr
       result.add (str[2].ord + 0x20).chr
-    elif cp in 0x81a0 .. 0x81bf:
+    of 0x81a0 .. 0x81bf:
       # だ～み
       result.add str[0]
       result.add (str[1].ord + 0x02).chr
@@ -265,16 +267,17 @@ proc toHalfKana*(str: string): string =
     if str.len != 3:
       return
     let cp = str[1].ord shl 8 + str[2].ord
-    if cp in {0x8181 .. 0x819f, 0x8280 .. 0x8296, 0x829b, 0x829c}:
+    case cp
+    of 0x8181 .. 0x819f, 0x8280 .. 0x8296, 0x829b, 0x829c:
       # ぁ～た, む～ゖ, ゛, ゜
       return KanaTable[KanaDef[str]].half
-    elif cp in 0x81a0 .. 0x81bf:
+    of 0x81a0 .. 0x81bf:
       # だ～み
       return KanaTable[KanaDef[str]].half
-    elif cp in {0x82a1 .. 0x82bf, 0x83a0 .. 0x83b6, 0x83bb, 0x83bc}:
+    of 0x82a1 .. 0x82bf, 0x83a0 .. 0x83b6, 0x83bb, 0x83bc:
       # ァ～タ, ム～ヶ, ・, ー
       return KanaTable[KanaDef[str]].half
-    elif cp in 0x8380 .. 0x839f:
+    of 0x8380 .. 0x839f:
       # ダ～ミ
       return KanaTable[KanaDef[str]].half
     else:
